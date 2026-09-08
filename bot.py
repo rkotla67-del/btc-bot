@@ -1,8 +1,23 @@
-import time
+ import time
 import requests
+from http.server import HTTPServer, BaseHTTPRequestHandler
+import threading
 
 BOT_TOKEN = "8973913461:AAHEaH-Etk4z1PHout59FRFjD3x0ezc5DmA"
 CHAT_ID = "1398969681"
+
+# Render ko jagaye rakhne ke liye chhota web server
+class SimpleHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"Bot is alive and running!")
+
+def run_server():
+    server = HTTPServer(('0.0.0.0', 10000), SimpleHandler)
+    server.serve_forever()
+
+threading.Thread(target=run_server, daemon=True).start()
 
 def send_telegram(msg):
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
@@ -12,8 +27,7 @@ def send_telegram(msg):
     except Exception as e:
         print("Telegram Send Error:", e)
 
-# Bot start hone par test notification
-send_telegram("✅ *BTC 30M Breakout Bot Active!*\nBitstamp data monitoring shuru ho gayi hai.")
+send_telegram("✅ *BTC 30M Bot Updated!*\n24/7 Keep-Alive system active ho gaya hai.")
 
 last_alert_bar_time = None
 
