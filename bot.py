@@ -6,7 +6,6 @@ import threading
 BOT_TOKEN = "8973913461:AAHEaH-Etk4z1PHout59FRFjD3x0ezc5DmA"
 CHAT_ID = "1398969681"
 
-# Render ko jagaye rakhne ke liye chhota web server
 class SimpleHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
